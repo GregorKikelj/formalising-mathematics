@@ -60,7 +60,17 @@ end
 lemma subset.antisymm (hXY : X ⊆ Y) (hYX : Y ⊆ X) : X = Y :=
 begin
   -- start with `ext a`,
-  sorry
+  ext α,
+  rw subset_def at *,
+  specialize hXY α,
+  specialize hYX α,
+  split,
+  {
+    exact hXY,
+  },
+  {
+    exact hYX,
+  }
 end
 
 /-!
@@ -91,7 +101,22 @@ end
 
 lemma union_self : X ∪ X = X :=
 begin
-  sorry
+  ext α,
+  rw union_def,
+  split,
+  {
+    intros p,
+    cases p with pl pr,
+    assumption,
+    assumption,
+  },
+  {
+    intros p, -- How do I unfold this and?
+    simp,
+    assumption,
+  }
+  
+
 end
 
 lemma subset_union_left : X ⊆ X ∪ Y :=

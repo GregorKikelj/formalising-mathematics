@@ -84,6 +84,8 @@ open set
 
 ## image
 
+-- Zakaj ne ∃ x:S : f(x)=y?
+
 `y ∈ f '' S` is definitionally equal to `∃ x : X, x ∈ S ∧ f x = y`,
 but if you want to rewrite to change one to the other,
 we have
@@ -198,7 +200,42 @@ end
 
 lemma image_comp (S : set X) : (g ∘ f) '' S = g '' (f '' S) :=
 begin
-  sorry
+  ext s,
+  split,
+  {
+    intros p,
+    rw mem_image at *,
+    rcases p with ⟨x, pl, pr⟩,
+    use f x,
+    split,
+    {
+      rw mem_image,
+      use x,
+      simp,
+      exact pl,
+    },
+    {
+      simp at *,
+      assumption,
+    }
+  },{
+    intros p,
+    rw mem_image at *,
+    rcases p with ⟨y, pl, pr⟩,
+    rw mem_image at pl,
+    rcases pl with ⟨x, pll, plr⟩,
+    use x,
+    split,
+    {
+      assumption,
+    },
+    {
+      simp,
+      rw plr,
+      assumption,
+    }
+  }
+
 end
 
 open function
